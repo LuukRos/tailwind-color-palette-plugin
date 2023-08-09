@@ -1,6 +1,6 @@
 # Advanced Tailwind colour palettes made easy using plugins
 
-This is an example Vite + React + TypeScript project to implement a color palette generation plugin for Tailwind CSS. This repository goes hand in hand with my written article, found here.
+This is an example Vite + React + TypeScript project to implement a color palette generation plugin for Tailwind CSS. This repository goes hand in hand with my written article, found [here](./article.md).
 
 ## Running locally
 
