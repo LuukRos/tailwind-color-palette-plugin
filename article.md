@@ -6,7 +6,7 @@ Despite the ability to prototype rapidly, fast performance, no zombie CSS and an
 
 ## Tailwind's design system
 
-Tailwind ships with, as the devs put it themselves, 'an expertly-crafted default colour palette out-of-the-box', consisting of 22 different shades of grey, red, green, and blue. Tailwind's colour system is based on a series of stops ranging from 50 through 950, following the HSL (Hue, Saturation, Lightness) colour space. The different stops increase/decrease the lightness of a certain colour, predictably brightening or darkening the colour. The 500 colour stop of a color is considered the base of a colour: it's like the colour hasn't decided if it wants to be a Jedi or a Sith yet. In summary, this system allows designers and developers alike to create consistent and visually enticing interfaces with ease.
+Tailwind ships with, as the devs put it themselves, 'an expertly-crafted default colour palette out-of-the-box', consisting of 22 different shades of grey, red, green, and blue. Tailwind's colour system is based on a series of stops ranging from 50 through 950, following the HSL (Hue, Saturation, Lightness) colour space. The different stops increase/decrease the lightness of a certain colour, predictably brightening or darkening the colour. The 500 colour stop of a colour is considered the base of a colour: it's like the colour hasn't decided if it wants to be a Jedi or a Sith yet. In summary, this system allows designers and developers alike to create consistent and visually enticing interfaces with ease.
 
 ## Extending the colour palette
 
@@ -69,9 +69,9 @@ We want to be able to supply hex colour codes to our plugin. However, earlier we
 
 How do we get there? Space travel. We'll have to traverse various colour spaces to reach our end goal.
 
-According to [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl), `hsl()` expresses `sRGB` colors using hue, saturation and lightness, so let's start by looking at converting hex (our desired input) to rgb.
+According to [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl), `hsl()` expresses `sRGB` colours using hue, saturation and lightness, so let's start by looking at converting hex (our desired input) to rgb.
 
-Hex codes follow a syntax of either 3, 4, 6 or 8 characters: `#RGB`, `#RGBA`, `#RRGGBB` and `#RRGGBBAA`. In this format, `Red`, `Green` and `Blue` are well presented and might look familiar. `A` represents an optional `Alpha` value of the color, indicating transparency. However, given that we don't want to consider transparency or opacity of the actual output (Tailwind exposes opacity utilities for us to use), we'll ignore `A` in this tutorial.
+Hex codes follow a syntax of either 3, 4, 6 or 8 characters: `#RGB`, `#RGBA`, `#RRGGBB` and `#RRGGBBAA`. In this format, `Red`, `Green` and `Blue` are well presented and might look familiar. `A` represents an optional `Alpha` value of the colour, indicating transparency. However, given that we don't want to consider transparency or opacity of the actual output (Tailwind exposes opacity utilities for us to use), we'll ignore `A` in this tutorial.
 
 The code below accepts a `hex` string and creates three colour channels: red, green and blue.
 
@@ -236,7 +236,7 @@ A few things we need to do:
 As we learned earlier, Tailwind represents its colour palette using values ranging from 50 through 950, in which 50 and 950 represent the lightest and darkest shades of a single colour, respectively. We can translate these steps to code and use TypeScript to get some neat inference going on.
 
 ```ts
-// This represents a readonly array of all color stops within Tailwind's design system.
+// This represents a readonly array of all colour stops within Tailwind's design system.
 const COLOR_STOPS = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
 ] as const;
@@ -256,7 +256,7 @@ getLightnessForColorStop(500); // 50
 getLightnessForColorStop(950); // 5
 ```
 
-We've already come a long way! Next up? Let's generate an actual HSL color for each stop we have defined earlier.
+We've already come a long way! Next up? Let's generate an actual HSL colour for each stop we have defined earlier.
 
 ```ts
 const { hue, saturation } = hexToHsl("#9146ff");
