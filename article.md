@@ -6,7 +6,7 @@ Despite the ability to prototype rapidly, fast performance, no zombie CSS and an
 
 ## Tailwind's design system
 
-Tailwind ships with, as the devs put it themselves, 'an expertly-crafted default colour palette out-of-the-box', consisting from 22 different shades of grey, red, green, and blue. Tailwind's colour system is based on a series of stops ranging from 50 through 950, following the HSL (Hue, Saturation, Lightness) colour space. The different stops increase/decrease the lightness of a certain colour, predictably brightening or darkening the colour. The 500 colour stop of a color is considered the base of a colour: it's like the colour hasn't decided if it wants to be a Jedi or a Sith yet. In summary, this system allows designers and developers alike to create consistent and visually enticing interfaces with ease.
+Tailwind ships with, as the devs put it themselves, 'an expertly-crafted default colour palette out-of-the-box', consisting of 22 different shades of grey, red, green, and blue. Tailwind's colour system is based on a series of stops ranging from 50 through 950, following the HSL (Hue, Saturation, Lightness) colour space. The different stops increase/decrease the lightness of a certain colour, predictably brightening or darkening the colour. The 500 colour stop of a color is considered the base of a colour: it's like the colour hasn't decided if it wants to be a Jedi or a Sith yet. In summary, this system allows designers and developers alike to create consistent and visually enticing interfaces with ease.
 
 ## Extending the colour palette
 
@@ -21,7 +21,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: '#6600ff',
+        purple: "#6600ff",
       },
     },
   },
@@ -111,7 +111,7 @@ export const hexToRgb = (hex: string) => {
 The code above already gives us a very neat output:
 
 ```ts
-const rgb = hexToRgb('#9146ff');
+const rgb = hexToRgb("#9146ff");
 // {
 //   red: 145,
 //   green: 70,
@@ -179,7 +179,7 @@ export const rgbToHsl = (rgb: RGB) => {
 Phew, that was quite the pill to swallow. You can read up a bit more on the whole science-y part over [here](https://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/), if you are interested. Regardless, this code now gives us an even neater output that we get to use in our plugin. Trust me, we're getting there!
 
 ```ts
-const rgb = hexToRgb('#9146ff'); // First go from hex to RGB
+const rgb = hexToRgb("#9146ff"); // First go from hex to RGB
 const hsl = rgbToHsl(rgb); // Then go from RGB to HSL
 // {
 //   hue: 264,
@@ -194,7 +194,7 @@ const hsl = rgbToHsl(rgb); // Then go from RGB to HSL
 
 This is where things get interesting. We are going to use the logic we wrote previously and hook this up to a Tailwind plugin, along with some additional things we'll have to take care of. There are a few ways to go about this, but we'll first get familiar with the idea of writing Tailwind plugins.
 
-Plugins allow us to inject new styles into our app's stylesheets using JavaScript instead of CSS. To get started, we can add a `plugins` array in our `tailwind.config.ts` file. Each entry in our array would be a `plugin()` function that takes an anonymous function as its first argument, in which you can destructure quite a few helper functions that might suite your plugins needs.
+Plugins allow us to inject new styles into our app's stylesheets using JavaScript instead of CSS. To get started, we can add a `plugins` array in our `tailwind.config.ts` file. Each entry in our array would be a `plugin()` function that takes an anonymous function as its first argument, in which you can destructure quite a few helper functions that might suit your plugin's needs.
 
 Some examples include
 
@@ -204,7 +204,7 @@ Some examples include
 
 All helper functions can be found in the [Tailwind docs](https://tailwindcss.com/docs/plugins). Additionally, `plugin()` takes another optional argument that'll allow us to merge configuration values into the `tailwind.config.ts` file. Lastly, there is also a `plugin.withOptions()` function that can be used to pass options to the plugin if they don't necessarily belong in the `tailwind.config.ts` file. The API is similar to the `plugin()` API, except that each argument should be a function that receives `options`.
 
-Given that we want our colour palette to be based on different hex values passed into our plugin, we can start of by defining a `plugin` variable which is an instance of Tailwind's `plugin.withOptions` function. We can use `addBase()` to register new styles in Tailwind's `base` layer. Let's set up our `tailwind.config.ts` file to get started:
+Given that we want our colour palette to be based on different hex values passed into our plugin, we can start off by defining a `plugin` variable which is an instance of Tailwind's `plugin.withOptions` function. We can use `addBase()` to register new styles in Tailwind's `base` layer. Let's set up our `tailwind.config.ts` file to get started:
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -259,7 +259,7 @@ getLightnessForColorStop(950); // 5
 We've already come a long way! Next up? Let's generate an actual HSL color for each stop we have defined earlier.
 
 ```ts
-const { hue, saturation } = hexToHsl('#9146ff');
+const { hue, saturation } = hexToHsl("#9146ff");
 
 COLOR_STOPS.forEach((stop) => {
   const lightness = getLightnessForColorStop(stop);
@@ -335,7 +335,7 @@ Let's bring our code together and knock this plugin out of the park. We'll need 
 
 #### CSS Variables
 
-CSS variables are a relatively new feature. They represent custom properties that contain a value that can be used in other declarations using the `var()` function. More information about them can be found on the excellent documentation of [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
+CSS variables are a relatively new feature. They represent custom properties that contain a value that can be used in other declarations using the `var()` function. More information about them can be found in the excellent documentation of [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
 
 Keep in mind that CSS variables are always prefixed with `--`. This is where the `valueFormatter` we saw earlier comes in: we can pass this into `createColorObject` to format the output in such a way that it becomes a valid CSS variable.
 
@@ -393,7 +393,7 @@ export const colorPlugin = plugin.withOptions(
     return ({ addBase }) => {
       addBase({
         // colorVariables are supposed to go on our :root element on the base layer.
-        ':root': colorVariables,
+        ":root": colorVariables,
       });
     };
   },
@@ -416,19 +416,19 @@ export const colorPlugin = plugin.withOptions(
 You can then import and add the plugin into your `tailwind.config.ts` file. Be sure to add as many colours as your heart desires!
 
 ```ts
-import type { Config } from 'tailwindcss';
-import { colorPlugin } from './src/plugins/colors';
+import type { Config } from "tailwindcss";
+import { colorPlugin } from "./src/plugins/colors";
 
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
   plugins: [
     colorPlugin({
       colors: {
-        primary: '#9146ff',
-        secondary: '#fff945',
+        primary: "#9146ff",
+        secondary: "#fff945",
       },
     }),
   ],
@@ -441,6 +441,4 @@ Plug this into your code base and go wild with colours tailored specifically to 
 - What if you don't actually need a full palette with stops ranging from 50 through 950? No worries! These unused classes are tree shaken regardless, so no need to worry about bloating your bundle. In any case, you can still use the existing Tailwind colours or extend your `tailwind.config.ts` file on an as-needed basis.
 - Our colour palette hasn't been tested for accessibility purposes, meaning this might give us issues in the long term.
 
-I hope you learned something new and exciting today. Feel free to look at the final code on my **GitHub ADD LINK HERE** profile.
-
-Godspeed.
+I hope you learned something new and exciting today. Feel free to look at the final code on my [GitHub profile](https://github.com/LuukRos/tailwind-color-palette-plugin) and be sure to reach out if you have any questions or feedback. I plan on being back soon with more cool content involving Tailwind CSS, React or TypeScript, so keep your eyes peeled for that.
